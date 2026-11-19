@@ -5,19 +5,14 @@ on:
 
 jobs:
   vendor:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout Alacritty
-        uses: actions/checkout@v4
-
-      - name: Vendor all Cargo crates
-        run: |
+      - uses: actions/checkout@v4
+      - run: |
           mkdir -p .cargo
           cargo vendor > .cargo/config.toml
           tar --exclude='.git' -czf ../alacritty-offline.tar.gz .
-
-      - name: Upload offline bundle
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: alacritty-offline
           path: ../alacritty-offline.tar.gz
